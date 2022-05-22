@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import com.example.flowerfollower.databinding.ActivityRegisterBinding
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -42,22 +41,27 @@ class RegisterActivity : AppCompatActivity() {
         if(nickName.isEmpty()) {
             binding.EnterNickName.error = "닉네임을 입력해주세요"
             binding.EnterNickName.requestFocus()
+            return
         }
         else if(email.isEmpty()) {
             binding.EnterEmail.error = "이메일을 입력해주세요"
             binding.EnterEmail.requestFocus()
+            return
         }
         else if(password.isEmpty()) {
             binding.EnterPassword.error = "비밀번호를 입력해주세요"
             binding.EnterPassword.requestFocus()
+            return
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.EnterEmail.error = "유효한 이메일 형식이 아닙니다"
             binding.EnterEmail.requestFocus()
+            return
         }
         else if(password.length < 8) {
             binding.EnterPassword.error = "비밀번호는 8자리 이상으로 입력해주세요"
             binding.EnterPassword.requestFocus()
+            return
         }
 
         binding.progressBar.visibility = View.VISIBLE
