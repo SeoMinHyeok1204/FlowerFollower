@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "381579174898",
+    "project_id": "flowerfollwer",
+    "storage_bucket": "flowerfollwer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381579174898:android:5cc0714049a42b949e016b",
+        "android_client_info": {
+          "package_name": "com.example.flowerfollower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381579174898-hem72pcfluvka3k57dud03afavv2e71t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flowerfollower",
+            "certificate_hash": "f477ff58b97560d6c2f6cdea23435acf7e2e86f5"
+          }
+        },
+        {
+          "client_id": "381579174898-77pgeaev02d7ahhfiufluh46frftp4qf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkqVf67motEhI4_j7YEIhvslL7NriaaJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381579174898-77pgeaev02d7ahhfiufluh46frftp4qf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
