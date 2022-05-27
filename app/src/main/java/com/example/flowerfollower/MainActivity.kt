@@ -4,25 +4,32 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flowerfollower.databinding.ActivityMainBinding
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import org.tensorflow.lite.Interpreter
+import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.channels.FileChannel
+import kotlin.experimental.or
 
 const val REQUEST_GALLERY = 100
 const val REQUEST_CAMERA = 200
@@ -42,6 +49,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var bitmapImage: Bitmap? = null
     private var pixelArray = IntArray(224 * 224)
     private lateinit var interpreter: Interpreter
+    private lateinit var nickname : String
+    private lateinit var database : DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,33 +61,85 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun init() {
-//        user = FirebaseAuth.getInstance().currentUser!!
-//        reference = FirebaseDatabase.getInstance().getReference("User")
-//        uid = user.uid
-//
-//        reference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val profile = snapshot.getValue(UserInfo::class.java)
-//
-//                if(profile != null) {
-//                    val nickname = profile.nickName
-//                    val email = profile.email
-//                    val password = profile.password
-//
-//                    binding.apply {
-//                        tvNickname.text = nickname
-//                        tvEmail.text = email
-//                        tvPassword.text = password
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(this@MainActivity, "오류가 발생했습니다. 다시 시도해 주세요", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        user = FirebaseAuth.getInstance().currentUser!!
+        reference = FirebaseDatabase.getInstance().getReference("User")
+        uid = user.uid
+
+        reference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val profile = snapshot.getValue(UserInfo::class.java)
+                if(profile != null) {
+                    nickname = profile.nickName
+                    setRecyclerView()
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, "오류가 발생했습니다. 다시 시도해 주세요", Toast.LENGTH_SHORT).show()
+            }
+        })
         interpreter = Interpreter(loadModel(), null)
         binding.bottomNav.setOnItemSelectedListener(this)
+
+    }
+
+    private fun setRecyclerView() {
+//        database = FirebaseDatabase.getInstance().getReference("Posting")
+//        val query = database.limitToLast(50)
+//        val option =
+//            FirebaseRecyclerOptions.Builder<CommunityPosting>().setQuery(query, CommunityPosting::class.java).build()
+//        val adapter = CommunityPostingAdapter(option)
+//        binding.apply {
+//            communityRecyclerview.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+//            communityRecyclerview.adapter = adapter
+//            adapter.startListening()
+//        }
+//        database.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                adapter.notifyDataSetChanged()
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//        })
+
+        val array : ArrayList<CommunityPosting> = ArrayList()
+
+        database = FirebaseDatabase.getInstance().getReference("Posting")
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                binding.progressBar4.visibility = View.VISIBLE
+                array.clear()
+                for (data in snapshot.children) {
+                    val uid = data.child("uid").value as String
+                    val title = data.child("title").value as String
+                    val content = data.child("content").value as String
+                    val time = data.child("time").value as String
+                    val commentNum = data.child("commentNum").value as String
+                    val nickname = data.child("nickname").value as String
+                    val imageUrl = data.child("imageUrl").value as String
+                    val epoch = data.child("epoch").value as String
+                    val postingID = data.child("postingID").value as String
+
+
+                    val item = CommunityPosting(uid, title, content, time, commentNum, nickname, imageUrl, epoch, postingID)
+                    array.add(item)
+                }
+                if(array.size > 1) {
+                    array.sortWith(Comparator { p0, p1 -> p0!!.epoch!!.toLong().compareTo(p1!!.epoch!!.toLong()) * -1})
+                }
+                binding.communityRecyclerview.adapter?.notifyDataSetChanged()
+                binding.progressBar4.visibility = View.GONE
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MainActivity, "게시글을 불러 오지못했습니다", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+        binding.communityRecyclerview.layoutManager = LinearLayoutManager(null)
+        binding.communityRecyclerview.setHasFixedSize(true)
+        binding.communityRecyclerview.adapter = CommunityPostingAdapter(array, uid, nickname)
     }
 
     private fun openCamera() {
@@ -149,7 +210,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun openWrite() {
-        Toast.makeText(this, "글쓰기", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, WritingActivity::class.java)
+        intent.putExtra("nickname", nickname)
+        intent.putExtra("uid", uid)
+        startActivity(intent)
     }
 
     private fun loadModel(): ByteBuffer {

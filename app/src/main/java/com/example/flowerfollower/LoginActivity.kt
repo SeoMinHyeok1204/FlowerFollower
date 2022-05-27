@@ -1,10 +1,12 @@
 package com.example.flowerfollower
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.flowerfollower.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.LoginButton.setOnClickListener {
+            closeKeyboard()
             logIn()
         }
         binding.forgetPassword.setOnClickListener {
@@ -85,5 +88,13 @@ class LoginActivity : AppCompatActivity() {
                     binding.progressBar2.visibility = View.GONE
                 }
             }
+    }
+
+    private fun closeKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }
