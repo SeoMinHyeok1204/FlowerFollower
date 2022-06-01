@@ -1,10 +1,13 @@
 package com.example.flowerfollower
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -25,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import org.tensorflow.lite.Interpreter
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -33,6 +38,7 @@ import kotlin.experimental.or
 
 const val REQUEST_GALLERY = 100
 const val REQUEST_CAMERA = 200
+const val REQUEST_EXTERNAL_STORAGE = 300
 const val IMAGE_MEAN = 127.5f
 const val IMAGE_STD = 127.5f
 
@@ -83,25 +89,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun setRecyclerView() {
-//        database = FirebaseDatabase.getInstance().getReference("Posting")
-//        val query = database.limitToLast(50)
-//        val option =
-//            FirebaseRecyclerOptions.Builder<CommunityPosting>().setQuery(query, CommunityPosting::class.java).build()
-//        val adapter = CommunityPostingAdapter(option)
-//        binding.apply {
-//            communityRecyclerview.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-//            communityRecyclerview.adapter = adapter
-//            adapter.startListening()
-//        }
-//        database.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                adapter.notifyDataSetChanged()
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
-
         val array : ArrayList<CommunityPosting> = ArrayList()
 
         database = FirebaseDatabase.getInstance().getReference("Posting")
@@ -172,29 +159,50 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         dlg.show()
     }
 
+    private fun getRealPathFromURI(context: Context, contentUri : Uri) : String{
+        var cursor : Cursor?
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+        val column_index = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)!!
+        cursor.moveToFirst()
+        return cursor.getString(column_index)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_GALLERY) {
             bitmapImage = MediaStore.Images.Media.getBitmap(contentResolver, data?.data)
             val image = data?.data
+            val tmp = getRealPathFromURI(this, image!!)
+            Log.d("!@#$", tmp)
             predict()
 
             val intent = Intent(this, FlowerInfoActivity::class.java)
             intent.putExtra("flowerName", predictResult)
             intent.putExtra("probability", probability)
             intent.putExtra("imageUri", image.toString())
+            intent.putExtra("uid", uid)
+            intent.putExtra("path", tmp)
             startActivity(intent)
         }
 
         else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CAMERA) {
             bitmapImage = data?.extras?.get("data") as Bitmap
             val image = data.extras?.get("data") as Bitmap
+            val baos = ByteArrayOutputStream()
+            image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val path = MediaStore.Images.Media.insertImage(contentResolver, image, "Title", null)
+            val uri = Uri.parse(path)
+            val tmp = getRealPathFromURI(this, uri)
+            Log.d("!@#$", tmp)
             predict()
 
             val intent = Intent(this, FlowerInfoActivity::class.java)
             intent.putExtra("flowerName", predictResult)
             intent.putExtra("probability", probability)
             intent.putExtra("imageBitmap", image)
+            intent.putExtra("uid", uid)
+            intent.putExtra("path", tmp)
             startActivity(intent)
         }
     }
@@ -206,7 +214,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun openMyGarden() {
-        Toast.makeText(this, "마이 가든", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, MyGardenActivity::class.java)
+        intent.putExtra("nickname", nickname)
+        intent.putExtra("uid", uid)
+        startActivity(intent)
     }
 
     private fun openWrite() {

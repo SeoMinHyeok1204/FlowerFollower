@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.flowerfollower.databinding.ActivityInPostingBinding
@@ -20,6 +21,7 @@ class InPostingActivity : AppCompatActivity() {
     private lateinit var binding : ActivityInPostingBinding
     private lateinit var database : DatabaseReference
     private lateinit var array : ArrayList<Comment>
+    private lateinit var uid : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,12 @@ class InPostingActivity : AppCompatActivity() {
         val title = intent.getStringExtra("title")
         val content = intent.getStringExtra("content")
         val imageUrl = intent.getStringExtra("imageUrl")
+        val writerUid = intent.getStringExtra("writerUID")
+        uid = intent.getStringExtra("currentUserUID")!!
+
+        if(writerUid == uid) {
+            binding.postingEraseButton.visibility = View.VISIBLE
+        }
 
         val display = windowManager.defaultDisplay
         val rvParams = binding.rvComment.layoutParams
@@ -60,7 +68,24 @@ class InPostingActivity : AppCompatActivity() {
                 closeKeyboard()
                 uploadComment()
             }
+            postingEraseButton.setOnClickListener {
+                postingDeleteAlertDlg()
+            }
         }
+    }
+
+    private fun postingDeleteAlertDlg() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("글을 삭제하시겠습니까?")
+            .setPositiveButton("확인") { _, _ ->
+                database.removeValue()
+                finish()
+            }
+            .setNegativeButton("취소") { dlg, _ ->
+                dlg.dismiss()
+            }
+        val dlg = builder.create()
+        dlg.show()
     }
 
     private fun showComment() {
@@ -91,7 +116,7 @@ class InPostingActivity : AppCompatActivity() {
 
         binding.rvComment.layoutManager = LinearLayoutManager(null)
         binding.rvComment.setHasFixedSize(true)
-        binding.rvComment.adapter = CommentAdapter(array)
+        binding.rvComment.adapter = CommentAdapter(array, uid, intent.getStringExtra("postingID")!!)
     }
 
     private fun uploadComment() {
@@ -101,7 +126,7 @@ class InPostingActivity : AppCompatActivity() {
         else {
             val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
             val time : String = sdf.format(Date())
-            val currentUID = intent.getStringExtra("currentUserUID")!!
+            val currentUID = uid
             val currentNickname = intent.getStringExtra("currentUserNickname")!!
             val commentID = currentUID + "@" + time.replace('/', '-').trim()
             var commentNum = 0

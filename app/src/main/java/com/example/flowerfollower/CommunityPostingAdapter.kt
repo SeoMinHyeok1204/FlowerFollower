@@ -152,6 +152,7 @@ class CommunityPostingAdapter(private val postingList:ArrayList<CommunityPosting
             intent.putExtra("content", postingList[position].content)
             intent.putExtra("postingID", postingList[position].postingID)
             intent.putExtra("imageUrl", postingList[position].imageUrl)
+            intent.putExtra("writerUID", postingList[position].uid)
             intent.putExtra("currentUserUID", uid)
             intent.putExtra("currentUserNickname", nickname)
             startActivity(holder.itemView.context, intent, null)
