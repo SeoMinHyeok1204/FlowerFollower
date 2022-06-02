@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
 
         android:layout_marginBottom="9dp"
@@ -75,8 +75,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="416dp"
-        android:layout_height="393dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/main_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,14 +101,13 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#E6E6E6"
         app:itemIconSize="40dp"
         app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
