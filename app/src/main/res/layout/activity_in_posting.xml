@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color_green"
     tools:context=".InPostingActivity">
 
     <ScrollView
@@ -19,8 +20,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="25dp"
+                android:background="@drawable/register_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -43,6 +47,7 @@
                     android:text="글쓴이"
                     android:textSize="15sp"
                     android:textStyle="bold"
+                    android:textColor="@color/main_color_green"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,40 +72,64 @@
                     app:srcCompat="@drawable/ic_baseline_close_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/postTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="15dp"
-                android:text="제목"
-                android:textSize="21sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/register_background"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/postImage"
-                android:layout_width="180dp"
-                android:layout_height="205dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_baseline_local_florist_24" />
+                <TextView
+                    android:id="@+id/postTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="15dp"
+                    android:text="제목"
+                    android:textColor="@color/main_color_green"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/postContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="16dp"
-                android:inputType="textMultiLine"
-                android:text="내용"
-                android:textSize="17sp" />
+                <ImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="180dp"
+                    android:layout_height="205dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_baseline_local_florist_24" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="25dp" />
+                <TextView
+                    android:id="@+id/postContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="16dp"
+                    android:inputType="textMultiLine"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:text="내용"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="275dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/main_background"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="16dp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
@@ -119,7 +148,8 @@
             android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:hint="댓글을 입력하세요"
+            android:hint="Enter a comment"
+            android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -128,7 +158,9 @@
             android:id="@+id/postCommentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="작성"
+            android:text="ENTER"
+            android:textColor="#FFF"
+            android:background="@drawable/button_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/postComment"

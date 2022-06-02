@@ -21,8 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="FlowerName"
-            android:textAlignment="center"
+            android:gravity="center"
+            android:background="@drawable/button_background"
             android:textSize="34sp"
+            android:textColor="#FFF"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -30,8 +32,10 @@
         android:id="@+id/LocationButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="사진 찍은 위치 보기"
+        android:text="Where is this flower?"
         android:textSize="16sp"
+        android:textColor="#FFF"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

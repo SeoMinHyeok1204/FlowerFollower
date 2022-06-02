@@ -10,23 +10,22 @@
     <ProgressBar
         android:id="@+id/progressBar4"
         style="?android:attr/progressBarStyle"
-        android:layout_marginTop="150dp"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="314dp"
         android:baselineAligned="false"
-        android:layout_marginBottom="9dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,45 +39,48 @@
                 android:id="@+id/myInfoButton"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="72dp"
-                android:layout_marginBottom="213dp"
                 android:layout_weight="1"
                 android:background="@color/main_color_green"
                 android:scaleType="fitCenter"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.044"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.052"
                 app:srcCompat="@drawable/usermenuimg"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="177dp"
-                android:layout_height="0dp"
+                android:layout_width="107dp"
+                android:layout_height="73dp"
                 android:layout_gravity="bottom"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="3dp"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="FlowerFollower"
+                android:text="Flower
+                                Follower"
                 android:textColor="#FFF"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.128"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.944" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="306dp"
-                android:layout_height="321dp"
+                android:layout_width="273dp"
+                android:layout_height="280dp"
                 android:layout_weight="1"
-                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageButton"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.829"
                 app:srcCompat="@drawable/flowerpot" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,6 +91,7 @@
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="9dp"
         android:background="@drawable/main_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,9 +122,10 @@
         android:background="#E6E6E6"
         app:itemIconSize="40dp"
         app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
