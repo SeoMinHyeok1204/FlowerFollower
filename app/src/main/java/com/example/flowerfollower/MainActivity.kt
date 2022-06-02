@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         interpreter = Interpreter(loadModel(), null)
         binding.bottomNav.setOnItemSelectedListener(this)
 
-        binding.myinfobtn.setOnClickListener {
+        binding.myInfoButton.setOnClickListener {
             openMyInfo()
         }
     }
