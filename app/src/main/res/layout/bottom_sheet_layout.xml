@@ -15,7 +15,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
-        android:text="인식 방법을 선택해주세요."
+        android:text="Choose a recognition method"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="카메라"
+                android:text="camera"
                 android:textSize="20sp" />
         </LinearLayout>
         <!--
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="갤러리"
+                android:text="gallery"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

@@ -5,28 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/main_color_green"
     tools:context=".MyInfo2Activity">
-
-    <TextView
-        android:id="@+id/myInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:text="My Info"
-        android:textSize="28sp" />
-
-    <ImageView
-        android:id="@+id/user_image"
-        android:layout_width="200dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#FFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/myInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="My Info"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="200dp"
+        android:layout_height="217dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/register_background"
+        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/register_background"
         android:orientation="horizontal">
 
         <TextView
@@ -43,13 +56,18 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="3"
+            android:layout_gravity="center"
             android:text="email"
             android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/register_background"
         android:orientation="horizontal">
 
         <TextView
@@ -66,13 +84,18 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="3"
+            android:layout_gravity="center"
             android:text="nickname"
             android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/register_background"
         android:orientation="horizontal">
 
         <TextView
@@ -87,7 +110,8 @@
         <EditText
             android:id="@+id/AfterNickname"
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
             android:layout_weight="3"
             android:hint="Enter new Nickname"
             android:textSize="20dp" />
@@ -106,6 +130,7 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:enabled="false"
+            android:background="@drawable/button_background"
             android:text="CHANGE NICKNAME" />
 
         <Button
@@ -113,9 +138,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/button_background"
             android:layout_margin="5dp"
             android:text="LOGOUT" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/background_rose" />
 
 </LinearLayout>
