@@ -1,5 +1,5 @@
 package com.example.flowerfollower
-
+// 글을 파이어베이스에 올리거나 파이어베이스에서 가져올 때 사용하는 클래스
 data class CommunityPosting(val uid : String
                             , val title:String
                             , val content:String
@@ -9,6 +9,3 @@ data class CommunityPosting(val uid : String
                             , val imageUrl : String
                             , val epoch : String
                             , val postingID : String)
-//{
-//    constructor():this("0", "오류", "글을 불러오지 못했습니다", "???", "0", "error", "0", "0", "0")
-//}
