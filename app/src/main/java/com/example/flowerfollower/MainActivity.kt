@@ -48,7 +48,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var user : FirebaseUser
     private lateinit var reference: DatabaseReference
     private lateinit var uid : String
-    private val flowerNames = arrayOf("부겐빌레아", "데이지", "장미", "치자나무", "히비스커스", "수국", "백합", "호접란", "작약", "튤립")
+    private val flowerNames = arrayOf("아카시아", "아네모네", "철쭉", "도라지", "베르가모트", "금낭화", "동백", "카네이션", "개박하", "수레국화",
+                                                    "코스모스", "크로커스", "데이지", "달리아", "민들레", "물망초", "개나리", "프리지아", "아이리스", "자스민",
+                                                    "라벤더", "라일락", "연꽃", "마리골드", "미모사", "나팔꽃", "장미", "해바라기", "튤립", "제비꽃")
     private lateinit var inputBuffer: ByteBuffer
     private var predictResult: String? = null
     private var probability : Float? = null
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var interpreter: Interpreter
     private lateinit var nickname : String
     private lateinit var database : DatabaseReference
+    private lateinit var usermail : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun init() {
         user = FirebaseAuth.getInstance().currentUser!!
         reference = FirebaseDatabase.getInstance().getReference("User")
+        usermail = user.email.toString()
         uid = user.uid
 
         reference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -86,6 +90,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         interpreter = Interpreter(loadModel(), null)
         binding.bottomNav.setOnItemSelectedListener(this)
 
+        binding.myinfobtn.setOnClickListener {
+            openMyInfo()
+        }
+    }
+
+    //open Myinfo2Activity
+    private fun openMyInfo(){
+        val intent = Intent(this, MyInfo2Activity::class.java)
+        intent.putExtra("nickname", nickname)
+        intent.putExtra("usermail",usermail)
+        intent.putExtra("uid", uid)
+        startActivity(intent)
     }
 
     private fun setRecyclerView() {
@@ -229,7 +245,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun loadModel(): ByteBuffer {
         val assetManager = resources.assets
-        val assetFileDescriptor = assetManager.openFd("MyModel.tflite")
+        val assetFileDescriptor = assetManager.openFd("MyModel_30.tflite")
         val fileInputStream = FileInputStream(assetFileDescriptor.fileDescriptor)
         val fileChannel = fileInputStream.channel
         val startOffset = assetFileDescriptor.startOffset
@@ -265,12 +281,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         inputBuffer.order(ByteOrder.nativeOrder())
         convertBitmapToByteBuffer(resizedBitmap)
 
-        val output = Array(1) { FloatArray(10) }
+        val output = Array(1) { FloatArray(30) }
 
         interpreter.run(inputBuffer, output)
 
         var maxIndex = 0
-        for(index in 0..9) {
+        for(index in 0..29) {
             if(output[0][maxIndex] < output[0][index])
                 maxIndex = index
         }
