@@ -20,7 +20,7 @@ class InPostingActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityInPostingBinding
     private lateinit var database : DatabaseReference
-    private lateinit var array : ArrayList<Comment>
+    private lateinit var array : ArrayList<Comment> // 댓글을 저장할 배열
     private lateinit var uid : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,7 @@ class InPostingActivity : AppCompatActivity() {
 
     private fun init() {
         database = FirebaseDatabase.getInstance().getReference("Posting").child(intent.getStringExtra("postingID")!!)
-
+        // 글에 대한 기본적인 정보 받기
         val writer = intent.getStringExtra("writer")
         val time = intent.getStringExtra("time")
         val title = intent.getStringExtra("title")
@@ -41,7 +41,7 @@ class InPostingActivity : AppCompatActivity() {
         val imageUrl = intent.getStringExtra("imageUrl")
         val writerUid = intent.getStringExtra("writerUID")
         uid = intent.getStringExtra("currentUserUID")!!
-
+        // 현재 유저의 uid와 글 쓴 사람의 uid가 같은 경우만 삭제 버튼이 보이게 함
         if(writerUid == uid) {
             binding.postingEraseButton.visibility = View.VISIBLE
         }
@@ -51,15 +51,15 @@ class InPostingActivity : AppCompatActivity() {
         rvParams.width = display.width - display.width/12
         binding.rvComment.layoutParams = rvParams
 
-        binding.apply {
+        binding.apply { // 위에서 받은 기본 정보대로 설정
             postWriter.text = writer
             postTime.text = time
             postTitle.text = title
             postContent.text = content
-            if(imageUrl == "0") {
+            if(imageUrl == "0") { // 이미지가 없으면 이미지 뷰 안보이게 하기
                 postImage.visibility = View.GONE
             }
-            else {
+            else { // 이미지가 있으면 스토리지에서 가져오기
                 Glide.with(this@InPostingActivity).load(imageUrl).into(postImage)
             }
             array = ArrayList()
@@ -74,7 +74,7 @@ class InPostingActivity : AppCompatActivity() {
         }
     }
 
-    private fun postingDeleteAlertDlg() {
+    private fun postingDeleteAlertDlg() { // 글 삭제할지 묻는 다이얼로그
         val builder = AlertDialog.Builder(this)
         builder.setMessage("글을 삭제하시겠습니까?")
             .setPositiveButton("확인") { _, _ ->
@@ -88,7 +88,8 @@ class InPostingActivity : AppCompatActivity() {
         dlg.show()
     }
 
-    private fun showComment() {
+    private fun showComment() { // 파이어베이스에서 댓글들 읽어와서 보여주기
+        // 파이어베이스에서 읽기
         database.child("comment").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 array.clear()
@@ -103,7 +104,7 @@ class InPostingActivity : AppCompatActivity() {
 
                     array.add(Comment(writer, id, content, time, epoch, commentID))
                 }
-                if(array.size > 1) {
+                if(array.size > 1) { // 먼저 써진 댓글이 위로 오도록 정렬
                     array.sortWith(Comparator { p0, p1 -> p0!!.epoch!!.toLong().compareTo(p1!!.epoch!!.toLong())})
                 }
                 binding.rvComment.adapter?.notifyDataSetChanged()
@@ -119,7 +120,7 @@ class InPostingActivity : AppCompatActivity() {
         binding.rvComment.adapter = CommentAdapter(array, uid, intent.getStringExtra("postingID")!!)
     }
 
-    private fun uploadComment() {
+    private fun uploadComment() { // 댓글 작성하기
         if(binding.postComment.text.trim() == "") {
             Toast.makeText(applicationContext, "내용을 입력해 주세요", Toast.LENGTH_SHORT).show()
         }
@@ -151,7 +152,7 @@ class InPostingActivity : AppCompatActivity() {
         }
     }
 
-    private fun closeKeyboard() {
+    private fun closeKeyboard() { // 키보드 닫기
         val view = this.currentFocus
         if (view != null) {
             val imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

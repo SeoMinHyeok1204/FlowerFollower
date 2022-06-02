@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         usermail = user.email.toString()
         uid = user.uid
 
-        reference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+        reference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener { // 파이어베이스에서 현재 유저 닉네임 읽어오기
             override fun onDataChange(snapshot: DataSnapshot) {
                 val profile = snapshot.getValue(UserInfo::class.java)
                 if(profile != null) {
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 Toast.makeText(applicationContext, "오류가 발생했습니다. 다시 시도해 주세요", Toast.LENGTH_SHORT).show()
             }
         })
-        interpreter = Interpreter(loadModel(), null)
+        interpreter = Interpreter(loadModel(), null) // 꽃 인식 모델 읽어오기 위해 필요함
         binding.bottomNav.setOnItemSelectedListener(this)
 
         binding.myInfoButton.setOnClickListener {
@@ -95,8 +95,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    //open Myinfo2Activity
-    private fun openMyInfo(){
+    private fun openMyInfo(){ // 유저 정보 화면으로 이동
         val intent = Intent(this, MyInfo2Activity::class.java)
         intent.putExtra("nickname", nickname)
         intent.putExtra("usermail",usermail)
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         startActivity(intent)
     }
 
-    private fun setRecyclerView() {
+    private fun setRecyclerView() { // 파이어베이스에서 글들 읽어와서 보여주기
         val array : ArrayList<CommunityPosting> = ArrayList()
 
         database = FirebaseDatabase.getInstance().getReference("Posting")
@@ -127,7 +126,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val item = CommunityPosting(uid, title, content, time, commentNum, nickname, imageUrl, epoch, postingID)
                     array.add(item)
                 }
-                if(array.size > 1) {
+                if(array.size > 1) { // 최근에 써진 글이 먼저 오도록 정렬
                     array.sortWith(Comparator { p0, p1 -> p0!!.epoch!!.toLong().compareTo(p1!!.epoch!!.toLong()) * -1})
                 }
                 binding.communityRecyclerview.adapter?.notifyDataSetChanged()
@@ -145,7 +144,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.communityRecyclerview.adapter = CommunityPostingAdapter(array, uid, nickname)
     }
 
-    private fun openCamera() {
+    private fun openCamera() { // 카메라 권한 있는지 확인하고 있으면 카메라 실행
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         when {
@@ -161,7 +160,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    private fun cameraAlertDlg() {
+    private fun cameraAlertDlg() { // 카메라 권한을 명시적으로 거부한 경우 다시 묻기
         val builder = AlertDialog.Builder(this)
         builder.setMessage("반드시 카메라 권한이 허용 되어야 합니다")
             .setTitle("권한 체크")
@@ -175,7 +174,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         dlg.show()
     }
 
-    private fun getRealPathFromURI(context: Context, contentUri : Uri) : String{
+    private fun getRealPathFromURI(context: Context, contentUri : Uri) : String{ // 핸드폰 내에서 사진의 경로 읽기
         var cursor : Cursor?
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         cursor = context.contentResolver.query(contentUri, proj, null, null, null)
@@ -186,7 +185,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_GALLERY) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_GALLERY) { // 갤러리에서 사진을 고른 경우
             bitmapImage = MediaStore.Images.Media.getBitmap(contentResolver, data?.data)
             val image = data?.data
             val tmp = getRealPathFromURI(this, image!!)
@@ -202,7 +201,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             startActivity(intent)
         }
 
-        else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CAMERA) {
+        else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CAMERA) { // 카메라로 사진을 찍은 경우
             bitmapImage = data?.extras?.get("data") as Bitmap
             val image = data.extras?.get("data") as Bitmap
             val baos = ByteArrayOutputStream()
@@ -223,27 +222,27 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    private fun openGallery() {
+    private fun openGallery() { // 갤러리 열기
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_GALLERY)
     }
 
-    private fun openMyGarden() {
+    private fun openMyGarden() { // 마이 가든으로 이동
         val intent = Intent(this, MyGardenActivity::class.java)
         intent.putExtra("nickname", nickname)
         intent.putExtra("uid", uid)
         startActivity(intent)
     }
 
-    private fun openWrite() {
+    private fun openWrite() { // 글쓰기 화면으로 이동
         val intent = Intent(this, WritingActivity::class.java)
         intent.putExtra("nickname", nickname)
         intent.putExtra("uid", uid)
         startActivity(intent)
     }
 
-    private fun loadModel(): ByteBuffer {
+    private fun loadModel(): ByteBuffer { // 꽃 인식 모델 불러오기
         val assetManager = resources.assets
         val assetFileDescriptor = assetManager.openFd("MyModel_30.tflite")
         val fileInputStream = FileInputStream(assetFileDescriptor.fileDescriptor)
@@ -254,7 +253,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, length)
     }
 
-    private fun convertBitmapToByteBuffer(bitmap: Bitmap) {
+    private fun convertBitmapToByteBuffer(bitmap: Bitmap) { // 비트맵을 바이트 버퍼로 변경
         inputBuffer.rewind()
 
         bitmap.getPixels(pixelArray, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
@@ -270,7 +269,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    private fun predict() {
+    private fun predict() { // 사용자가 준 사진을 꽃 인식 모델에게 넘겨줘서 무슨 꽃인지 예측하게 하기
         val inputShape = interpreter.getInputTensor(0).shape()
         val inputWidth = inputShape[1] //224
         val inputHeight = inputShape[2] //224
@@ -290,13 +289,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if(output[0][maxIndex] < output[0][index])
                 maxIndex = index
         }
-        predictResult = flowerNames[maxIndex]
-        probability = output[0][maxIndex]
+        predictResult = flowerNames[maxIndex] // 가장 확률이 높은 꽃 이름
+        probability = output[0][maxIndex] // 그 확률
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.bottom_camera -> {
+            R.id.bottom_camera -> { // 카메라, 갤러리 중 뭐로 사진 고를지 묻는 다이얼로그 생성
                 val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
                 val bottomSheetDialog = BottomSheetDialog(this)
                 bottomSheetDialog.setContentView(bottomSheetView)

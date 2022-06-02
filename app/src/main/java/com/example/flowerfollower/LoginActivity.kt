@@ -41,10 +41,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun logIn() {
+    private fun logIn() { // 로그인
         val email = binding.EditEmail.text.toString().trim()
         val password = binding.EditPassword.text.toString().trim()
-
+        // 빈 칸이 아니고 규칙에 맞게 입력 했는지 확인
         if(email.isEmpty()) {
             binding.EditEmail.error = "이메일을 입력해주세요"
             binding.EditEmail.requestFocus()
@@ -67,23 +67,23 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.progressBar2.visibility = View.VISIBLE
-
+        // 규칙에 다 맞으면 로그인
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if(it.isSuccessful) {
+                if(it.isSuccessful) { // 파이어베이스에 등록된 이메일, 비밀번호임
                     val user = auth.currentUser
-                    if(user!!.isEmailVerified) {
+                    if(user!!.isEmailVerified) { // 이메일 인증도 했으면 통과
                         val intent = Intent(this, MainActivity::class.java)
                         binding.progressBar2.visibility = View.GONE
                         finish()
                         startActivity(intent)
                     }
-                    else {
+                    else { // 이메일 인증을 안한 계정이면 이메일 발송
                         user.sendEmailVerification()
                         Toast.makeText(this, "계정을 활성화 하기 위한 메일을 발송했습니다. 메일을 확인해 주세요", Toast.LENGTH_SHORT).show()
                         binding.progressBar2.visibility = View.GONE
                     }
-                }else {
+                }else { // 파이어베이스에 등록되지 않은 이메일, 비밀번호임
                     Toast.makeText(this, "로그인에 실패했습니다. 다시 확인해 주세요", Toast.LENGTH_SHORT).show()
                     binding.progressBar2.visibility = View.GONE
                 }

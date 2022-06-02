@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         val nickName = binding.EnterNickName.text.toString().trim()
         val email = binding.EnterEmail.text.toString().trim()
         val password = binding.EnterPassword.text.toString().trim()
-
+        // 빈 칸이 아니고 규칙에 맞는지 확인
         if(nickName.isEmpty()) {
             binding.EnterNickName.error = "닉네임을 입력해주세요"
             binding.EnterNickName.requestFocus()
@@ -65,28 +65,28 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.progressBar.visibility = View.VISIBLE
-
+        // 규칙에 맞으면 회원가입 진행
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if(it.isSuccessful) {
+                if(it.isSuccessful) { // 회원가입 성공
                     val user = UserInfo(nickName, email, password)
                     FirebaseDatabase.getInstance().getReference("User")
                         .child(FirebaseAuth.getInstance().currentUser!!.uid)
                         .setValue(user).addOnCompleteListener(object : OnCompleteListener<Void> {
                             override fun onComplete(task: Task<Void>) {
-                                if(task.isSuccessful) {
+                                if(task.isSuccessful) { // 사용자 정보 파이어베이스에 업로드 성공
                                     Toast.makeText(this@RegisterActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
                                     binding.progressBar.visibility = View.GONE
                                     finish()
                                 }
-                                else {
+                                else { // 사용자 정보 파이어베이스에 업로드 실패
                                     Toast.makeText(this@RegisterActivity, "회원가입에 실패했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
                                     binding.progressBar.visibility = View.GONE
                                 }
                             }
                         })
                 }
-                else {
+                else { // 회원가입 실패
                     Toast.makeText(this@RegisterActivity, "회원가입에 실패했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
                     binding.progressBar.visibility = View.GONE
                 }

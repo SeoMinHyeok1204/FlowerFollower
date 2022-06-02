@@ -21,69 +21,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import java.io.ByteArrayInputStream
 import kotlin.experimental.or
 
-//class CommunityPostingAdapter(options : FirebaseRecyclerOptions<CommunityPosting>)
-//    : FirebaseRecyclerAdapter<CommunityPosting, CommunityPostingAdapter.CustomViewHolder>(options) {
-//
-//    inner class CustomViewHolder(val binding : CommunityRecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root) {
-//
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-//        val view = CommunityRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return CustomViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: CustomViewHolder, position: Int, model: CommunityPosting) {
-//        holder.binding.apply {
-//            communityItemTitle.text = model.title
-//            val preView = model.content.replace('\n',' ')
-//            when {
-//                preView.length > 46 -> {
-//                    val tmp = preView.substring(0..45) + ".."
-//                    communityItemPreview.text = tmp
-//                }
-//                else -> communityItemPreview.text = preView
-//            }
-//            communityItemTime.text = model.time
-//            communityItemCommentNum.text = model.commentNum
-//            communityItemCommentImage.setImageResource(R.drawable.comment)
-//            communityItemNickname.text = model.nickname
-//            val binaryImage = model.image
-//            if(binaryImage == "0") {
-////                communityItemFlower.visibility = View.GONE
-//            }
-//            else {
-//                val b = binaryStringToByteArray(model.image)
-//                val stream = ByteArrayInputStream(b)
-//                val image = Drawable.createFromStream(stream, "image")
-//                communityItemFlower.setImageDrawable(image)
-//            }
-//        }
-//    }
-//
-//    private fun binaryStringToByteArray(s : String) : ByteArray {
-//        val count = s.length / 8
-//        val b = ByteArray(count)
-//        for(i in 1..count) {
-//            val t = s.substring((i-1)*8, i*8)
-//            b[i-1] = binaryStringToByte(t)
-//        }
-//        return b
-//    }
-//
-//    private fun binaryStringToByte(s : String) : Byte {
-//        var ret: Byte?
-//        var total : Byte = 0
-//        for (i in 0..7) {
-//            ret = if(s[7-i]=='1') (1.shl(i)).toByte() else 0
-//            total = ret.or(total)
-//        }
-//        return total
-//    }
-//}
-
 class CommunityPostingAdapter(private val postingList:ArrayList<CommunityPosting>, private val uid:String, private val nickname:String) : Adapter<CommunityPostingAdapter.CustomViewHolder>() {
-
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.community_item_title)
@@ -102,7 +40,7 @@ class CommunityPostingAdapter(private val postingList:ArrayList<CommunityPosting
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val title = postingList[position].title.replace('\n', ' ')
-        when {
+        when { // 제목이 너무 길면 잘라서 일부만 보이게하기
             title.length > 30 -> {
                 val tmp = title.substring(0..29) + ".."
                 holder.title.text = tmp
@@ -110,7 +48,7 @@ class CommunityPostingAdapter(private val postingList:ArrayList<CommunityPosting
             else -> holder.title.text = title
         }
         val preView = postingList[position].content.replace('\n',' ')
-        when {
+        when { // 내용이 너무 길면 잘라서 일부만 보이게 하기
             preView.length > 46 -> {
                 val tmp = preView.substring(0..45) + ".."
                 holder.contentPreview.text = tmp
@@ -122,29 +60,17 @@ class CommunityPostingAdapter(private val postingList:ArrayList<CommunityPosting
         holder.commentImage.setImageResource(R.drawable.comment)
         holder.who.text = postingList[position].nickname
 
-//        val params = holder.commentNum.layoutParams as ConstraintLayout.LayoutParams
-//        params.topMargin = 0
-//        params.leftMargin = 0
-//        params.bottomMargin = 8
-//        params.rightMargin = 260
-//        holder.commentNum.layoutParams = params
         holder.image.visibility = View.VISIBLE
 
         val imageUrl = postingList[position].imageUrl
-        if(imageUrl == "0") {
+        if(imageUrl == "0") { // 이미지가 없는 글들은 이미지 뷰가 안보이게 하기
             holder.image.visibility = View.GONE
-//            params.topMargin = 0
-//            params.leftMargin = 0
-//            params.bottomMargin = 8
-//            params.rightMargin = 48
-//            holder.commentNum.layoutParams = params
         }
-        else {
+        else { // 이미지가 있는 글은 파이어베이스 스토리지에서 이미지 가져오기
             Glide.with(holder.image.context).load(imageUrl).into(holder.image)
         }
 
-        holder.itemView.setOnClickListener {
-//            Log.d("####", params.rightMargin.toString())
+        holder.itemView.setOnClickListener { // 글 클릭시 글 안으로 이동
             val intent = Intent(holder.itemView.context, InPostingActivity::class.java)
             intent.putExtra("writer", postingList[position].nickname)
             intent.putExtra("time", postingList[position].time)

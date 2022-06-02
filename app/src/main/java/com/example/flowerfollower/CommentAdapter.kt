@@ -32,15 +32,16 @@ class CommentAdapter(private val commentList : ArrayList<Comment>, private val u
         holder.who.text = commentList[position].writer
         holder.content.text = commentList[position].content
         holder.time.text = commentList[position].time
-        if (commentList[position].id == uid) {
-            holder.eraseButton.visibility = View.VISIBLE
+        holder.eraseButton.visibility = View.VISIBLE
+        if (commentList[position].id != uid) { // 자기가 쓴 댓글만 지울 수 있도록 댓글 쓴 사람의 uid와 현재 유저의 uid 비교
+            holder.eraseButton.visibility = View.GONE
         }
         holder.eraseButton.setOnClickListener {
             commentDeleteAlertDlg(commentList[position].commentID, holder.eraseButton.context)
         }
     }
 
-    private fun commentDeleteAlertDlg(commentID : String, context : Context) {
+    private fun commentDeleteAlertDlg(commentID : String, context : Context) { // 댓글을 삭제할지 묻는 다이얼로그
         val builder = AlertDialog.Builder(context)
         builder.setMessage("댓글을 삭제하시겠습니까?")
             .setPositiveButton("확인") { _, _ ->
