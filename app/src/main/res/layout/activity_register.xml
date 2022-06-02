@@ -4,70 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color_green"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:text="회원가입"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
+        android:layout_marginTop="130dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/EnterNickName"
-        android:layout_width="260dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:hint="NickName"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="Register Page"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/EnterEmail"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:hint="Email address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EnterNickName">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/register_background"
+            android:orientation="vertical">
 
-    </EditText>
+            <EditText
+                android:id="@+id/EnterNickName"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="48dp"
+                android:ems="10"
+                android:hint="NickName"
+                android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/EnterPassword"
-        android:layout_width="260dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="36dp"
-        android:hint="Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EnterEmail">
+            <EditText
+                android:id="@+id/EnterEmail"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:hint="Email address"
+                android:minHeight="48dp">
 
-    </EditText>
+            </EditText>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/AssignButton"
-        android:layout_width="262dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="56dp"
-        android:text="회원가입"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EnterPassword" />
+            <EditText
+                android:id="@+id/EnterPassword"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="54dp"
+                android:hint="Password">
+
+            </EditText>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/AssignButton"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/register_background"
+            android:textColor="@color/main_color_green"
+            android:text="Enter"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/progressBar"

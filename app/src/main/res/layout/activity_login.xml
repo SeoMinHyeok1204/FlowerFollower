@@ -4,58 +4,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color_green"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:text="로그인"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:layout_marginTop="148dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/EditEmail"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:hint="Email address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Login Page"
+            android:textColor="#FFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/register_background"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/EditPassword"
-        android:layout_width="260dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="36dp"
-        android:hint="Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditEmail">
+            <EditText
+                android:id="@+id/EditEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="60dp"
+                android:ems="10"
+                android:hint="Email address"
+                android:inputType="textPersonName" />
 
-    </EditText>
+            <EditText
+                android:id="@+id/EditPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="Password"
+                android:minHeight="48dp">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/LoginButton"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="로그인"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditPassword" />
+            </EditText>
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/LoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/register_background"
+            android:text="Login"
+            android:textColor="@color/main_color_green"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/forgetPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_weight="1"
+                    android:text="비밀번호 변경"
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/Register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="68dp"
+                    android:layout_weight="1"
+                    android:text="회원가입"
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -66,31 +125,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/forgetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="비밀번호 변경"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/Register"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Register" />
-
-    <TextView
-        android:id="@+id/Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="회원가입"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/forgetPassword"
-        app:layout_constraintTop_toBottomOf="@+id/LoginButton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

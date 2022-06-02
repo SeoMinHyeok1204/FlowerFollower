@@ -4,16 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color_green"
     tools:context=".FlowerInfoActivity">
 
     <TextView
         android:id="@+id/tv_flowername"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="꽃 이름"
+        android:gravity="center"
+        android:background="@drawable/register_background"
+        android:text="Flower Name"
         android:textSize="28sp"
+        android:textColor="@color/main_color_green"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,6 +37,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/main_background"
         app:layout_constraintBottom_toTopOf="@+id/LoginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,6 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
             android:orientation="vertical">
 
             <TextView
@@ -50,8 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="○ 개화시기"
-                android:textColor="#2196F3"
+                android:text="🪴flowering time🪴"
+                android:textColor="@color/main_color_green"
                 android:textSize="20sp" />
 
             <TextView
@@ -69,8 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="○ 꽃말"
-                android:textColor="#2196F3"
+                android:text="🪴flower language🪴"
+                android:textColor="@color/main_color_green"
                 android:textSize="20sp" />
 
             <TextView
@@ -88,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="○ 설명"
-                android:textColor="#2196F3"
+                android:text="🪴flower infomation🪴"
+                android:textColor="@color/main_color_green"
                 android:textSize="20sp" />
 
             <TextView
@@ -107,8 +114,11 @@
         android:id="@+id/LoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="마이 가든에 심기"
+        android:text="in my garden"
+        android:background="@drawable/button_background"
+        android:textColor="#FFF"
         android:textSize="20sp"
+        android:layout_marginTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
