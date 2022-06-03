@@ -51,37 +51,18 @@
                 app:srcCompat="@drawable/usermenuimg"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="107dp"
-                android:layout_height="73dp"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Flower
-                                Follower"
-                android:textColor="#FFF"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.128"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.944" />
-
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="273dp"
-                android:layout_height="280dp"
+                android:layout_width="396dp"
+                android:layout_height="368dp"
                 android:layout_weight="1"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.829"
-                app:srcCompat="@drawable/flowerpot" />
+                app:srcCompat="@drawable/mainpagelogo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
@@ -91,7 +72,6 @@
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="9dp"
         android:background="@drawable/main_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"

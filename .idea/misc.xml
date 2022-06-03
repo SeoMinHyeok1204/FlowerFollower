@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.253125" />
         <entry key="app/src/main/res/layout/activity_writing.xml" value="0.30579681396484376" />
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.253125" />
+        <entry key="app/src/main/res/layout/community_recyclerview_item.xml" value="0.253125" />
         <entry key="app/src/main/res/layout/mygarden_recyclerview_item.xml" value="0.253125" />
       </map>
     </option>
