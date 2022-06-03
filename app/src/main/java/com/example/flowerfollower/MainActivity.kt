@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         reference = FirebaseDatabase.getInstance().getReference("User")
         usermail = user.email.toString()
         uid = user.uid
+        binding.progressBar4.visibility = View.VISIBLE
 
         reference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener { // 파이어베이스에서 현재 유저 닉네임 읽어오기
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -105,11 +106,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun setRecyclerView() { // 파이어베이스에서 글들 읽어와서 보여주기
         val array : ArrayList<CommunityPosting> = ArrayList()
-
         database = FirebaseDatabase.getInstance().getReference("Posting")
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                binding.progressBar4.visibility = View.VISIBLE
                 array.clear()
                 for (data in snapshot.children) {
                     val uid = data.child("uid").value as String
