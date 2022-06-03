@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:text="2"
-            android:textColor="#03A9F4"
+            android:textColor="@color/main_color_green"
             app:layout_constraintBottom_toBottomOf="@+id/community_item_time"
             app:layout_constraintEnd_toStartOf="@+id/community_item_flower" />
 
