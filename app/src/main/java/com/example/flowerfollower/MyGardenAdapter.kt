@@ -29,7 +29,7 @@ class MyGardenAdapter(private val gardenList:ArrayList<gardenClass>) : RecyclerV
         holder.plantDate.text = gardenList[position].plantDate
         Glide.with(holder.flowerImage.context).load(gardenList[position].imageUrl).into(holder.flowerImage)
 
-        holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener { // 마이 가든에서 클릭하면 클린한 꽃으로 이동
             val intent = Intent(holder.itemView.context, InGardenActivity::class.java)
             intent.putExtra("flowerName", gardenList[position].flowerName)
             intent.putExtra("plantDate", gardenList[position].plantDate)

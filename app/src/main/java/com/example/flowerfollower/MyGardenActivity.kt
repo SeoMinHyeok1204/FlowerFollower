@@ -25,12 +25,11 @@ class MyGardenActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        database = FirebaseDatabase.getInstance().getReference("User").child(uid).child("Garden")
-        Log.d("####", database.toString())
+        database = FirebaseDatabase.getInstance().getReference("User").child(uid).child("Garden") // 파이어베이스 연결
         setRecyclerView()
     }
 
-    private fun setRecyclerView() {
+    private fun setRecyclerView() { // 사용자가 마이 가든에 올린 것들 읽어오기
         array = ArrayList()
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -47,7 +46,7 @@ class MyGardenActivity : AppCompatActivity() {
                     val item = gardenClass(flowerName, plantDate, epoch, imageUrl, imageDate, latitude, longitude)
                     array.add(item)
                 }
-                if(array.size > 1) {
+                if(array.size > 1) { // 최근게 위로 오게 정렬
                     array.sortWith(Comparator { p0, p1 -> p0!!.epoch!!.toLong().compareTo(p1!!.epoch!!.toLong()) * -1})
                 }
                 binding.MyGardenRecyclerView.adapter?.notifyDataSetChanged()

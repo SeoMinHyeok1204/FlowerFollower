@@ -19,7 +19,7 @@ class InGardenActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init() {
+    private fun init() { // 화면 설정, 위도 경도 정보 있는 경우 버튼 누르면 구글 맵으로 이동
         val flowerName = intent.getStringExtra("flowerName")!!
         val latitude = intent.getStringExtra("latitude")!!
         val longitude = intent.getStringExtra("longitude")!!

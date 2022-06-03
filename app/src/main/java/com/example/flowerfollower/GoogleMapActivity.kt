@@ -23,14 +23,14 @@ class GoogleMapActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init() {
+    private fun init() { // 위도 경도 정보 받아서 그 위치로 카메라 옮기고 옮기기만 하면 허전해서 마커도 찍어줌
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        //위도 경도 정보 받기
         val latitude = intent.getStringExtra("latitude")!!
         val longitude = intent.getStringExtra("longitude")!!
         val location = LatLng(latitude.toDouble(), longitude.toDouble())
         val options = MarkerOptions()
         options.position(location)
-        //options.icon()
         mapFragment.getMapAsync {
             googleMap = it
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 16.0f))

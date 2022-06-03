@@ -26,12 +26,12 @@ class FlowerInfoActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityFlowerInfoBinding
     private lateinit var uid : String
-    private  val  storage = Firebase.storage
-    private val storageRef = storage.reference
-    private lateinit var database : DatabaseReference
-    private var date : String = "0"
-    private var latitude : Float = 0f
-    private var longitude : Float = 0f
+    private  val  storage = Firebase.storage // 파이어베이스 스토리지
+    private val storageRef = storage.reference // 파이어베이스 스토리지
+    private lateinit var database : DatabaseReference // 파이어베이스 리얼타임 데이터베이스
+    private var date : String = "0" // 사진이 찍힌 날짜
+    private var latitude : Float = 0f // 사진이 찍힌 위도
+    private var longitude : Float = 0f // 사진이 찍힌 경도
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestExternalPermission() {
+    private fun requestExternalPermission() { // 저장 공간 접근 권한 받기
         when {
             (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) -> {
                 Plant()
@@ -64,7 +64,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun externalAlertDlg() {
+    private fun externalAlertDlg() { // 저장 공간 접근 권한을 명시적으로 거부한 경우 다시 묻기
         val builder = AlertDialog.Builder(this)
         builder.setMessage("반드시 저장 공간 권한이 허용 되어야 합니다")
             .setTitle("권한 체크")
@@ -78,7 +78,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         dlg.show()
     }
 
-    private fun setLatLang() {
+    private fun setLatLang() { // 사진에서 위도 경도 읽기
         val path = intent.getStringExtra("path")!!
         val exif = ExifInterface(path)
         date = if(exif.getAttribute(ExifInterface.TAG_GPS_DATESTAMP) == null) "0" else exif.getAttribute(ExifInterface.TAG_GPS_DATESTAMP)!!
@@ -103,7 +103,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun convertToDegree(str: String): Float {
+    private fun convertToDegree(str: String): Float { // 사진에서 읽은 위도, 경도는 형식이 달라서 일반적인 형식으로 변경하는 함수
         val dms = str.split(",")
 
         val d = dms[0].split("/")
@@ -124,8 +124,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         return floatD + (floatM / 60) + (floatS / 3600)
     }
 
-    private fun Plant() {
-        //꽃 이름, 마이 가든에 심은 날짜, 꽃 사진, 에포크, 사진이 찍힌 날짜, 사진 찍힌 위치
+    private fun Plant() { // 마이 가든으로 보내기
         setLatLang()
         Log.d("####", latitude.toString())
         Log.d("####", longitude.toString())
@@ -147,6 +146,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         val uploadTask = postRef.putBytes(data)
 
         binding.progressBar6.visibility = View.VISIBLE
+        // 파이어베이스 스토리지에 꽃 사진 올리기
         val urlTask = uploadTask.continueWithTask { task ->
             if(!task.isSuccessful) {
                 Log.d("####" , "마이 가든 에러1")
@@ -158,6 +158,7 @@ class FlowerInfoActivity : AppCompatActivity() {
             if(task.isSuccessful) {
                 downloadUri = task.result
                 val item = gardenClass(flowerName, time, epoch, downloadUri.toString(), date, latitude.toString(), longitude.toString())
+                //리얼타임 데이터베이스에 올리기
                 database.child(uid).child("Garden").child(postingID).setValue(item).addOnSuccessListener {
                     Toast.makeText(applicationContext, "마이 가든에 " + flowerName+ "을/를 심었습니다", Toast.LENGTH_SHORT).show()
                     binding.progressBar6.visibility = View.GONE
@@ -173,7 +174,7 @@ class FlowerInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setInfo() {
+    private fun setInfo() { // 꽃 사진 설정, 꽃에 대한 정보는 DB가 만들어지면 추가할 예정
         val flowerName = intent.getStringExtra("flowerName")
         val probability = intent.getFloatExtra("probability", 0f)
         val nameAndProbability = flowerName + ", " + round(probability * 100).toInt().toString() + "%"
