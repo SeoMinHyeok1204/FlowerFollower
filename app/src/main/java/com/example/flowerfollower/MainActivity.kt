@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@MainActivity, "게시글을 불러 오지못했습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "게시글을 불러오지 못했습니다", Toast.LENGTH_SHORT).show()
             }
         })
 

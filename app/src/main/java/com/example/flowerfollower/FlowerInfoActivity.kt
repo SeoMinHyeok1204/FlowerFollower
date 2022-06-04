@@ -13,8 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.flowerfollower.databinding.ActivityFlowerInfoBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
@@ -29,6 +28,7 @@ class FlowerInfoActivity : AppCompatActivity() {
     private  val  storage = Firebase.storage // 파이어베이스 스토리지
     private val storageRef = storage.reference // 파이어베이스 스토리지
     private lateinit var database : DatabaseReference // 파이어베이스 리얼타임 데이터베이스
+    private lateinit var flowerDB : DatabaseReference
     private var date : String = "0" // 사진이 찍힌 날짜
     private var latitude : Float = 0f // 사진이 찍힌 위도
     private var longitude : Float = 0f // 사진이 찍힌 경도
@@ -44,6 +44,7 @@ class FlowerInfoActivity : AppCompatActivity() {
     private fun init() {
         uid = intent.getStringExtra("uid")!!
         database = FirebaseDatabase.getInstance().getReference("User")
+        flowerDB = FirebaseDatabase.getInstance().getReference("Flower")
         setInfo()
         binding.PlantButton.setOnClickListener {
             requestExternalPermission()
@@ -187,5 +188,35 @@ class FlowerInfoActivity : AppCompatActivity() {
         val imageBitmap = intent.getParcelableExtra<Bitmap>("imageBitmap")
         if(imageBitmap != null)
             binding.ivFlowerimage.setImageBitmap(imageBitmap)
+
+        flowerDB.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (data in snapshot.children) {
+                    val name = data.child("name").value as String
+                    if(name == flowerName) {
+                        val flowerLanguage = data.child("flowerlanguage").value as String
+                        val propagation = data.child("propagation").value as String
+                        val habitat = data.child("habitat").value as String
+                        val scientificName = data.child("scientificName").value as String
+                        val controlLevel = data.child("controlLevel").value as String
+                        val controlRequest = data.child("controlRequest").value as String
+                        val lightDemand = data.child("lightDemand").value as String
+
+                        binding.tvFlowerLanguage.text = flowerLanguage
+                        binding.tvPropagation.text = propagation
+                        binding.tvHabitat.text = habitat
+                        binding.tvScientificName.text = scientificName
+                        binding.tvControlLevel.text = controlLevel
+                        binding.tvControlRequest.text = controlRequest
+                        binding.tvLightDemand.text = lightDemand
+
+                        return
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@FlowerInfoActivity, "정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

@@ -57,12 +57,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="🪴flowering time🪴"
+                android:text="🪴Flower Language🪴"
                 android:textColor="@color/main_color_green"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tv_blooming"
+                android:id="@+id/tv_flowerLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -76,12 +76,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="🪴flower language🪴"
+                android:text="🪴Propagation🪴"
                 android:textColor="@color/main_color_green"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tv_flowermean"
+                android:id="@+id/tv_propagation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -95,17 +95,102 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="🪴flower infomation🪴"
+                android:text="🪴Habitat🪴"
                 android:textColor="@color/main_color_green"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tv_flowerinfo"
+                android:id="@+id/tv_habitat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:text="🪴Scientific Name🪴"
+                android:textColor="@color/main_color_green"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_scientificName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:text="🪴Control Level🪴"
+                android:textColor="@color/main_color_green"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_controlLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:text="🪴Control Request🪴"
+                android:textColor="@color/main_color_green"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_controlRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:text="🪴Light Demand🪴"
+                android:textColor="@color/main_color_green"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_lightDemand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_lightDemand2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="8dp"
+                android:text="---"
                 android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
